@@ -1,0 +1,15 @@
+---
+- name: Install files
+  hosts: targets
+  tasks:
+    - name: copy demo app source
+      copy: src=../src/record_date.sh dest=/tmp/record_date.sh mode=755
+
+    - name: copy service file
+      copy: src=../src/record_date.service dest=/lib/systemd/system/record_date.service mode=644
+
+- name: Start Service
+  hosts: targets
+  tasks: 
+    - name: "ensure service started"
+      service: name=record_date state=started enabled=yes

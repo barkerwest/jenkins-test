@@ -1,0 +1,5 @@
+[Unit]
+Description=Record data in a file
+
+[Service]
+ExecStart=/tmp/record_date.sh
