@@ -2,17 +2,26 @@ pipeline {
   agent any
 
   stages {
-    stage ('Stage 1') {
+    stage ('Intro') {
       steps {
           echo 'Hello World!'
       }
     }
-    stage ('Stage 2') {
+    stage ('Build') {
       steps {
           echo 'build'
           echo TAG_TO_BUILD
           sh '''
               cat version.txt
+          '''
+      }
+    }
+    stage ('Test') {
+      steps {
+          echo 'test'
+          echo TAG_TO_BUILD
+          sh '''
+              ./test_version.sh TAG_TO_BUILD
           '''
       }
     }
