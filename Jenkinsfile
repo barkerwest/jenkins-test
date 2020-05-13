@@ -20,9 +20,7 @@ pipeline {
       steps {
           echo 'test'
           echo TAG_TO_BUILD
-          sh '''
-              ./test_version.sh TAG_TO_BUILD
-          '''
+          sh "./test_version.sh ${TAG_TO_BUILD}"
       }
     }
   }
