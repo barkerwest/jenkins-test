@@ -1,0 +1,13 @@
+---
+  - name: Install Ansible tools on Jenkins
+    hosts: jenkins-server
+    tasks:
+      - name: "install epel packages"
+        yum: name={{item}} state=present update_cache=yes
+        with_items:
+          - epel-release
+
+      - name: "install tool packages"
+        yum: name={{item}} state=present update_cache=yes
+        with_items:
+          - ansible

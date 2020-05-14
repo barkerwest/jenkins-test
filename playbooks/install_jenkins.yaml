@@ -1,0 +1,53 @@
+---
+  # jenkins password de500ecfa99c46ffa21c8f3dc2c3c54a
+  - name: Install Jenkins
+    hosts: jenkins-server
+    tasks:
+      - name: Download Jenkins rpm
+        get_url: 
+          url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+          dest: /etc/yum.repos.d/jenkins.repo
+
+      - name: Setup Jenkins rpm key
+        rpm_key:
+          state: present
+          key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+      
+      - name: Ensure all packages up to date
+        yum:
+          name: '*'
+          state: latest
+
+      - name: "install tool packages"
+        yum: name={{item}} state=present update_cache=yes
+        with_items:
+          - jenkins
+          - java-1.8.0-openjdk-devel
+          - git
+
+  - name: "Start Jenkins service"
+    hosts: jenkins-server
+    tasks:
+      - name: "Start service"
+        service: name=jenkins state=started enabled=yes
+
+  - name: Configure Firewall for Jenkins
+    hosts: jenkins-server
+    tasks:
+      - name: Configure firewall for jenkins
+        firewalld:
+          port: 8080/tcp
+          permanent: yes
+          state: enabled
+      - name: Reload firewall
+        service: 
+          name: firewalld
+          state: reloaded
+
+  - name: Setup jenkins as able to sudo
+    hosts: jenkins-server
+    tasks:
+      - name: add line to sudoers
+        lineinfile: 
+          dest: /etc/sudoers
+          line: 'jenkins ALL=(ALL) NOPASSWD: ALL'

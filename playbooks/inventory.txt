@@ -1,7 +1,11 @@
 target2 ansible_host=192.168.1.243 ansible_ssh_pass=osboxes.org
 target3 ansible_host=192.168.1.220 ansible_ssh_pass=osboxes.org
 target1 ansible_host=192.168.1.241 ansible_ssh_pass=osboxes.org
+jenkins ansible_host=192.168.1.139 ansible_ssh_pass=osboxes.org
 
+
+[jenkins-server]
+jenkins
 
 [targets]
 target2
