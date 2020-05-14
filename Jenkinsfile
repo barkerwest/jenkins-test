@@ -30,7 +30,7 @@ pipeline {
           echo TAG_TO_BUILD
           sh """
              cd playbooks
-             sudo ansible-playbook -i inventory.txt install_service.yaml
+             sudo ansible-playbook -i inventory.txt install_service.yaml -e install_hosts=${INSTALL_HOST}
           """
       }
     }

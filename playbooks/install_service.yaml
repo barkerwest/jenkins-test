@@ -11,7 +11,9 @@
       copy: src=../src/record_date.service dest=/lib/systemd/system/record_date.service mode=644
 
 - name: Start Service
-  hosts: targets
+  vars:
+    - install_hosts: targets
+  hosts: '{{install_hosts}}'
   tasks: 
     - name: "ensure service started"
       service: name=record_date state=started enabled=yes
