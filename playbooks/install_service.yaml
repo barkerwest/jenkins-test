@@ -1,6 +1,8 @@
 ---
 - name: Install files
-  hosts: targets
+  vars:
+    - install_hosts: targets
+  hosts: '{{install_hosts}}'
   tasks:
     - name: copy demo app source
       copy: src=../src/record_date.sh dest=/tmp/record_date.sh mode=755
